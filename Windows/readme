@@ -1,0 +1,47 @@
+Found this Program Useful?
+Donate: https://paypal.me/CloudMaking?locale.x=en_GB
+
+--------------------------------
+
+This Program Currently only works on Windows
+Make sure you have the Chrome Browser Installed v.96+
+
+{STEP 1 - DO THIS FIRST BEFORE ANYTHING}
+Download the latest release of chrome driver [https://chromedriver.chromium.org/downloads] based on your Chrome browser version at chrome://settings/help
+Place your downloaded chromedriver.exe into a folder called chromedrivers/
+
+{YOU ARE GOOD TO GO!!}
+Run Auto_Chrome_5.exe
+Open a pre-set file inside the script (make sure to pick the right pre-set for you or make your own)
+
+--------------------------------
+
+**Pre-set Builder Commands: **
+(Remember, all normal python code and syntax works)
+Find CSS and XPATH codes through the inspect window on chrome. 
+All base selenium code also works fine (this just makes it so you don't need to setup anything)
+
+- go_to(address, fail_message[optional])
+
+- css_and_key(code, key, fail_message[optional])
+
+- xpath_and_key(code, key, fail_message[optional])
+
+- css_and_click(code, fail_message[optional])
+
+- xpath_and_click(code, fail_message[optional])
+
+- linktext_click(code, key, fail_message[optional])
+
+- wait_for_xpath(code, fail_message[optional])
+
+Must watch video for understanding selenium and making your own automation scripts: https://www.youtube.com/watch?v=tRNwTXeJ75U
+Important Notes please read before starting:
+Do not move anything in or out of the main script folder.
+
+--------------------------------
+
+If you have any questions or want to get in contact you can find me on Instagram and twitter by searching @cloudmaking (feel free to DM).
+
+If you want to support this project or me, please check out my NFTs and maybe buy some, 
+I accept most bids. https://opensea.io/collection/cryptoverse1 or Donate below: https://paypal.me/CloudMaking?locale.x=en_GB
