@@ -1,4 +1,0 @@
-please download the latest version of the chrome driver appropriate for your system from the link below:
-https://chromedriver.chromium.org/downloads
-
-do not rename and put in the same folder as this text file
