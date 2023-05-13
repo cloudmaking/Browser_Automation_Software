@@ -52,14 +52,23 @@ class Autochrome:
 		print(f"Connected to browser on port {self.browser_port}")
 
 	def run_preset_script(self):
-		self.file_location = filedialog.askopenfilename(initialdir = self.main_directory,title = "Select Preset file",filetypes = (("python files", "*.py"), ("text files","*.txt"), ("all files","*.*")))
-		if self.file_location == "": return "No file selected"
-		else:
-			print("Running preset script: " + self.file_location)
+		self.file_location = filedialog.askopenfilename(initialdir = self.main_directory, title = "Select Preset file", filetypes = (("python files", "*.py"), ("text files","*.txt"), ("all files","*.*")))
+	
+		if not self.file_location: 
+			print("No file selected")
+			return
+	
+		print("Running preset script: " + self.file_location)
+		try:
 			exec(open(self.file_location).read())
+		except Exception as e:
+			print(f"An error occurred while executing the script: {e}")
+			return
+	
 		print("-------------------------")
 		print("Script Execution Complete")
 		print("-------------------------")
+
 
 	def open_command_tester(self):
 		self.root = Tk()
