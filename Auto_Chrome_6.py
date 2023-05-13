@@ -101,7 +101,11 @@ class Autochrome:
 		self.scrollx.config(cursor='arrow')
 
 	def run_tester(self):
-		exec(self.TextArea.get(1.0, END))
+		try:
+			exec(self.TextArea.get(1.0, END))
+		except Exception as e:
+			print(f"An error occurred while executing the script: {e}")
+
 	
 	def xpath_and_click(self, code, fail_message= "Xpath not found"):
 		while True:
