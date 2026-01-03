@@ -1,0 +1,6 @@
+[
+  {"goto": "https://example.com"},
+  {"wait_for": {"text": "Example Domain"}},
+  {"click": {"css": "a"}},
+  {"wait_for": {"text": "IANA"}}
+]

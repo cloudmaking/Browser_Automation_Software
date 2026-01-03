@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "AutoChrome 8 Recorder",
+  "version": "0.1.0",
+  "description": "Capture selectors and generate AutoChrome 8 steps.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_title": "AutoChrome 8",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

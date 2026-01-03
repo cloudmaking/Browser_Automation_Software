@@ -1,56 +1,129 @@
-Visit my website for the instructions with hyperlinks to download and tutorials and more...
-https://www.aliraza.cloud/chrome-automation
+# AutoChrome 8 (Playwright)
 
-**Requirements:**
+A small, single-file CLI that runs browser automations from JSON steps or a single test line. It keeps a persistent profile folder so you can log in once and reuse sessions.
 
-- Python3 and pip
+## Project goals (roadmap)
 
-- Chrome browser v.96+
+- Keep setup friction low: one CLI file, one profile folder, minimal deps.
+- Preserve persistent Chrome profiles so logins stick across runs.
+- Make automation authoring fast: JSON steps and single-line test commands.
+- Add a Chrome extension recorder to capture selectors from real pages.
+- Use extension output to generate precise action steps (favor stable selectors).
+- Support flexible text matching but default to precise selectors.
+- Improve reliability with clear errors, screenshots on failure, and strict validation.
+- Later: let the extension append steps to a flow file and preview in-app.
 
-**Instructions:**
+## What you get
 
-1. Download and or Update Python and The Chrome browser (if you don’t have it already)
+- Persistent profile folder (log in once, reuse sessions)
+- JSON step runner
+- Single-line test command for quick checks
+- Headed or headless runs
+- Chrome extension recorder for selectors
 
-2. Drink some Water if you haven't today.
+## Folder layout
 
-3. Navigate to the program folder and run the following command in the terminal: `pip install -r requirements.txt`
+- `autochrome8.py` - the runner
+- `examples/` - sample flows
+- `autochrome_profile/` - created on first run (default)
+- `extension/` - Chrome extension recorder
+- `old/` - legacy files from AutoChrome 6/7
 
-4. Thats it!! You are ready to go. Now you can run the program by running the auto_chrome_6.py file.
+## Setup
 
-5. As this is a command line program, make sure to read the instructions carefully in the terminal/command prompt and follow them.
+Create and activate a virtual environment (recommended):
 
-6. If you have any questions, feel free to contact me on my website or on my twitter: aliraza.cloud or @cloudmaking
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
-**Features:**
+```bash
+pip install -r requirements.txt
+python -m playwright install
+```
 
-- Built in live Command tester for selectors and code snippets
-- Allows rapid development of automation scripts
+If you want to use your installed Chrome instead of Playwright's Chromium, add `--channel chrome` to commands.
 
-**Pre-set Script Builder Commands:**
+## Quick start
 
-(Remember, all normal python code and syntax works. Make your presets in txt files or in python files(recommended))
+1) Open a profile window to log in
 
-Find CSS and XPATH codes through the inspect window on chrome. 
-All base selenium code also works fine (this program just makes it so you don't need to setup anything)
-MAKE SURE to put "ac." before any selenium code you want to use. (ac. is short for auto_chrome)
+```bash
+python autochrome8.py profile --profile ./autochrome_profile --channel chrome
+```
 
-- ac.go_to(address, fail_message[optional])
+Log in to any sites you need, then press Enter in the terminal to close the window.
 
-- ac.css_and_key(code, key, fail_message[optional])
+2) Run a JSON flow
 
-- ac.xpath_and_key(code, key, fail_message[optional])
+```bash
+python autochrome8.py run examples/quick_check.json --profile ./autochrome_profile --channel chrome
+```
 
-- ac.css_and_click(code, fail_message[optional])
+3) Test a single action line
 
-- ac.xpath_and_click(code, fail_message[optional])
+```bash
+python autochrome8.py test "click css='a'" --profile ./autochrome_profile --channel chrome
+```
 
-**Extras**
+Single-line syntax uses key=value pairs:
 
-Must watch video for understanding selenium and making your own automation scripts: https://www.youtube.com/watch?v=tRNwTXeJ75U
+```bash
+python autochrome8.py test "fill css='input[name=email]' value='me@example.com'" --profile ./autochrome_profile
+python autochrome8.py test "wait text='Example Domain' match=exact" --profile ./autochrome_profile
+```
 
---------------------------------
+## Action format (JSON)
 
-If you have any questions or want to get in contact you can find me on Instagram and twitter by searching @cloudmaking (feel free to DM).
+Each step is a single-key object. Supported actions:
 
-If you want to support this project or me, please check out my NFTs and maybe buy some, 
-I accept most bids. https://opensea.io/collection/cryptoverse1 or Donate below: https://paypal.me/CloudMaking?locale.x=en_GB
+- `goto`: string URL, or `{ "url": "...", "timeout_ms": 15000 }`
+- `click`: `{ "css": "..." }` or `{ "xpath": "..." }` or `{ "text": "..." }`
+- `fill`: selector plus `value`, e.g. `{ "css": "input[name=email]", "value": "me@example.com" }`
+- `wait_for`: selector plus optional `timeout_ms` or `state` (`attached`, `visible`, `hidden`, `detached`)
+- `sleep_ms`: number of milliseconds
+
+Text matching options (for `text` selectors):
+
+- `match`: `"exact"` or `"contains"` (default: contains)
+- `exact`: `true` or `false` (alias for `match`)
+
+Example:
+
+```json
+[
+  {"goto": "https://example.com"},
+  {"wait_for": {"text": "Example Domain"}},
+  {"click": {"css": "a"}},
+  {"wait_for": {"text": "IANA"}}
+]
+```
+
+## Notes on profiles
+
+- The profile folder can be any path; use an empty folder if you want a clean automation profile.
+- If you point at a real Chrome user data directory, make sure Chrome is closed and use `--channel chrome`.
+- The default profile path is `./autochrome_profile` (created on first run).
+
+## Legacy
+
+Older Selenium/Tkinter versions live in `old/` for reference.
+
+## Chrome extension recorder
+
+There is a simple extension to capture selectors and generate AutoChrome steps in `extension/`.
+
+Load it in Chrome:
+
+1) Open `chrome://extensions`
+2) Enable Developer mode
+3) Click "Load unpacked" and select the `extension/` folder
+
+Usage:
+
+1) Pick an action (click/fill/wait) in the popup
+2) Click "Record", then click the element on the page
+3) Reopen the popup to copy the JSON step or CLI line
+
+Tip: open the same profile folder you use for automation, then load the extension there so it stays available in your automation profile.

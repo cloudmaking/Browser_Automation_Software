@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AutoChrome 8 Recorder</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div>
+          <h1>AutoChrome 8</h1>
+          <p class="tagline">Recorder</p>
+        </div>
+        <span id="status" class="status status-idle">Idle</span>
+      </header>
+
+      <section class="controls">
+        <label class="field">
+          <span>Action</span>
+          <select id="action">
+            <option value="click">Click</option>
+            <option value="fill">Fill</option>
+            <option value="wait">Wait for element</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Output selector</span>
+          <select id="selectorType">
+            <option value="css">CSS</option>
+            <option value="xpath">XPath</option>
+            <option value="text">Text</option>
+          </select>
+        </label>
+
+        <label class="field hidden" id="matchRow">
+          <span>Text match</span>
+          <select id="matchMode">
+            <option value="exact">Exact</option>
+            <option value="contains">Contains</option>
+          </select>
+        </label>
+
+        <label class="field hidden" id="valueRow">
+          <span>Fill value</span>
+          <input id="fillValue" type="text" placeholder="YOUR_VALUE" />
+        </label>
+
+        <button id="recordBtn" class="btn btn-primary">Record element</button>
+      </section>
+
+      <section class="capture">
+        <div class="summary" id="summary">No capture yet.</div>
+        <div class="meta">
+          <div>
+            <span class="label">Selector</span>
+            <span id="selectorValue">-</span>
+          </div>
+          <div>
+            <span class="label">Text</span>
+            <span id="textValue">-</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="copyJsonBtn" class="btn">Copy JSON step</button>
+          <button id="copyCliBtn" class="btn">Copy CLI line</button>
+        </div>
+
+        <textarea id="output" readonly></textarea>
+      </section>
+
+      <footer class="footer">
+        Click capture does not trigger page actions.
+      </footer>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

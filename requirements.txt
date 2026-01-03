@@ -1,3 +1,1 @@
-chromedriver-autoinstaller==0.4.0
-selenium==4.4.3
-
+playwright>=1.40.0,<2
